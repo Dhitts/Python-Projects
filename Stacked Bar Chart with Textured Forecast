@@ -1,0 +1,51 @@
+from zipfile import sizeEndCentDir
+
+import plotly.graph_objects as go
+
+# Define the years and revenue
+years = ["2020", "2021", "2022", "2023", "2024"]
+actual_revenue = [50, 55, 60, 65, 35]  # First half of 2024 actual
+forecast_revenue = ['','' ,'' ,'', 40]  # Second half of 2024 forecasted
+
+# Create the stacked bar chart
+fig = go.Figure()
+
+# Add actual revenue
+fig.add_trace(go.Bar(
+    x=years,
+    y=actual_revenue,
+    name="Actual Revenue",
+    marker_color='rgb(192,0,0)',
+    text=actual_revenue,
+    textposition='auto',
+    textfont=dict(size=30, family="Helvetica"),
+))
+fig.add_trace(go.Bar(
+    x=years,
+    y=forecast_revenue,
+    name="Forecasted Revenue",
+    text=forecast_revenue,
+    textposition='outside',
+    textfont=dict(size=30, family="Helvetica"),
+    marker=dict(
+        color='rgb(192,0,0)',
+        pattern=dict(shape='/',fillmode='replace'),
+        line=dict(color='rgb(192,0,0)', width=1)
+    )
+))
+fig.update_layout(
+    title="Revenue Over 5 Years with Forecast",
+    xaxis_title="Year",
+    yaxis_title="Revenue (in millions)",
+    barmode='stack',
+    template='plotly_white',
+    font=dict(family='Helvetica', size=40),
+    legend=dict(
+        yanchor="top",
+        y=0.99,
+        xanchor="left",
+        x=0.01
+    ),
+    barcornerradius=30
+    )
+fig.show()
