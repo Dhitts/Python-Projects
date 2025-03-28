@@ -1,0 +1,129 @@
+import numpy
+import plotly.graph_objects as go
+from narwhals.stable.v1 import exclude
+from pygments.lexers.c_cpp import CFamilyLexer
+from traits.trait_types import false
+
+categories = [2022,2023,2024,2025]
+revenue = [15000, 20000,25000,37000]
+ebitda = [5000, 7000, 11000, 18000]
+ebitda_margin = [a-b for a, b in zip(revenue, ebitda)]
+
+revenueforecast = [0,0,0,10000]
+ebitdaforecast = [0,0,0,2000]
+ebitda_marginforecast = [c-d for c, d in zip(revenueforecast, ebitdaforecast)]
+
+# Create the bar traces
+fig = go.Figure()
+
+#Actual Revenue
+fig.add_trace(
+    go.Bar(
+        name='Revenue',
+        x=categories,
+        y=revenue,
+        marker_color='rgb(192,0,0)',
+        offsetgroup=0,
+        text=revenue,
+        textposition='outside'
+    )
+)
+#Forecast Revenue
+fig.add_trace(
+    go.Bar(
+        name='Revenue Forecast',
+        x=categories,
+        y=revenueforecast,
+        marker=dict(
+            color='rgb(192,0,0)',
+            pattern=dict(
+                shape='/', fillmode='replace'),
+            line=dict(color='rgb(192,0,0)', width=1)),
+        offsetgroup=0,
+        text=revenueforecast,
+        textposition='outside',
+        showlegend=False
+    )
+)
+#Actual EBITDA
+fig.add_trace(
+    go.Bar(
+        name='EBITDA',
+        x=categories,
+        y=ebitda,
+        marker_color='black',
+        offsetgroup=1,
+        text=ebitda,
+        textposition='outside',
+        insidetextfont=dict(color='black')
+    )
+)
+#EBITDA Forecast
+fig.add_trace(
+    go.Bar(
+        name='EBITDA Forecast',
+        x=categories,
+        y=ebitdaforecast,
+        marker=dict(
+            color='black',
+            pattern=dict(
+                shape='/', fillmode='replace'),
+            line=dict(color='black', width=1)),
+        offsetgroup=1,
+        text=ebitdaforecast,
+        textposition='inside',
+        insidetextfont=dict(color='black',weight='bold'),
+        showlegend=False
+    )
+)
+# Actual Margin
+fig.add_trace(
+    go.Bar(
+        name='EBITDA Margin',
+        x=categories,
+        y=ebitda_margin,
+        marker_color='darkgrey',
+        offsetgroup=1,
+        text=ebitda_margin,
+        textposition='outside'
+    )
+)
+
+# Forecast Margin
+fig.add_trace(
+    go.Bar(
+        name='EBITDA Margin Forecast',
+        x=categories,
+        y=ebitda_marginforecast,
+        marker=dict(
+            color='darkgrey',
+            pattern=dict(
+                shape='/', fillmode='replace'),
+            line=dict(color='darkgrey', width=1)),
+        offsetgroup=1,
+        text=ebitda_marginforecast,
+        textposition='outside',
+        insidetextfont=dict(color='black', family="helvetica,bold"),
+        showlegend=False
+    )
+)
+# Update layout
+fig.update_layout(
+    barmode='relative',
+    yaxis_title='Amount ($)',
+    bargap=0.2,
+    bargroupgap=0,
+    height=900,
+    width=1200,
+    barcornerradius=15,
+    legend=dict(
+        yanchor="top",
+        y=0.99,
+        xanchor="left",
+        x=0.01,
+    ),
+    font=dict(family='helvetica', size=25),
+    template='plotly_white'
+)
+
+fig.show()
