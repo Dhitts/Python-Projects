@@ -1,5 +1,3 @@
-from zipfile import sizeEndCentDir
-
 import plotly.graph_objects as go
 
 # Define the years and revenue
