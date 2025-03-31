@@ -44,6 +44,10 @@ fig.update_layout(
         xanchor="left",
         x=0.01
     ),
-    barcornerradius=30
+    barcornerradius=30,
+    bargap=0.2,
+    bargroupgap=0,
+    height=900,#these are the sizes of the graph.  Change to whatever size is required 
+    width=1200,
     )
 fig.show()
